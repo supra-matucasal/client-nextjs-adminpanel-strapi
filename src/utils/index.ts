@@ -80,8 +80,6 @@ export function handleRedirection(preview?: boolean, custom?: string): Redirecti
 }
 
 export function getData(slug: string, locale: string, apiID: string, kind: string, preview?: boolean): DataReturn {
-  console.log('getting data:')
-  console.log(slug, locale, apiID, kind, preview);
   const previewParams = preview ? '&publicationState=preview&published_at_null=true' : '';
   let apiUrl = '';
   let slugToReturn = '';
@@ -103,6 +101,24 @@ export function getData(slug: string, locale: string, apiID: string, kind: strin
     slug: slugToReturn,
   };
 }
+
+
+export function getPartnershipsDataPage(slug: string, locale: string, apiID: string, kind: string, preview?: boolean): DataReturn {
+  const previewParams = preview ? '&publicationState=preview&published_at_null=true' : '';
+
+  let prefix = apiID === 'page' ? '' : `/${pluralize(apiID)}`;
+  prefix = apiID === 'article' ? '/blog' : prefix;
+
+  const slugToReturn = `${prefix}/${slug}?lang=${locale}`;
+  const apiUrl = `/${pluralize(apiID)}??populate[header]=*&populate[blocks]=*&locale=en`;
+
+  return {
+    data: getStrapiURL(apiUrl),
+    slug: slugToReturn,
+  };
+}
+
+
 
 export async function getRestaurants(key: QueryKey): Promise<{ restaurants: any[]; count: number }> {
   const [_, categoryName, placeName, localeCode, pageNumber, perPage] = key.queryKey;

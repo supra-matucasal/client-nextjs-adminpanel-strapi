@@ -16,7 +16,7 @@ async function getData(slug:string, lang?:string, contentType?:string, type?:str
 const Home = async ({ params }: { params: { slug: string } }) => {
 
   var delve = require('delve')
-  const actualSlug = params.slug || 'homepage';
+  const actualSlug = params.slug || 'home';
 
   const data = await getData(
     actualSlug,
