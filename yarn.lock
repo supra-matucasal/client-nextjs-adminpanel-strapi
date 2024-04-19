@@ -222,6 +222,11 @@
   dependencies:
     "@types/ms" "*"
 
+"@types/dlv@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@types/dlv/-/dlv-1.1.4.tgz#e92f76b78adf2b118b5a807956f36434baefbab0"
+  integrity sha512-m8KmImw4Jt+4rIgupwfivrWEOnj1LzkmKkqbh075uG13eTQ1ZxHWT6T0vIdSQhLIjQCiR0n0lZdtyDOPO1x2Mw==
+
 "@types/estree-jsx@^1.0.0":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@types/estree-jsx/-/estree-jsx-1.0.5.tgz#858a88ea20f34fe65111f005a689fa1ebf70dc18"

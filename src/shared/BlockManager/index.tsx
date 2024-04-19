@@ -3,6 +3,10 @@ const Faq = dynamic(() => import('../../components/blocks/Faq'), {
   ssr: true,
 });
 
+const Hero = dynamic(() => import('../../components/blocks/Hero'), {
+  ssr: true,
+});
+
 
 const BlockManager = ({ blocks, contentType, pageData, type }: { blocks: any[], contentType: string, pageData: any, type: string }) => {
   return (
@@ -13,6 +17,13 @@ const BlockManager = ({ blocks, contentType, pageData, type }: { blocks: any[], 
         switch (block.__component) {
           case 'blocks.faq':
             Block = Faq;
+            break;
+
+        }
+
+        switch (block.__component) {
+          case 'blocks.hero':
+            Block = Hero;
             break;
 
         }
