@@ -88,9 +88,9 @@ export function getData(slug: string, locale: string, apiID: string, kind: strin
     let prefix = apiID === 'page' ? '' : `/${pluralize(apiID)}`;
     prefix = apiID === 'article' ? '/blog' : prefix;
     slugToReturn = `${prefix}/${slug}?lang=${locale}`;
-    apiUrl = `/${pluralize(apiID)}?filters[slug][$eq]=${slug}&locale=${locale}${previewParams}&populate[blocks][populate]=members.picture,header,buttons.link,faq,featuresCheck,cards,pricingCards.perks,articles,restaurants,author.picture,images,cards.image,image&populate=localizations&populate[seo][populate]=metaSocial.image`;
+    apiUrl = `/${pluralize(apiID)}?filters[slug][$eq]=${slug}&locale=${locale}${previewParams}&populate[seo][populate]=metaSocial.image&populate[blocks][populate]=*&populate=localizations`;
   } else {
-    apiUrl = `/${apiID}?locale=${locale}${previewParams}&populate[blocks][populate]=*,buttons.link&populate=localizations&populate[header]=*&populate[seo]=metaSocial`;
+    apiUrl = `/${apiID}?locale=${locale}${previewParams}&populate[seo][populate]=metaSocial.image&populate[blocks][populate]=*&populate=localizations`;
     slugToReturn = apiID.includes('-page') ?
       `/${apiID.replace('-page', '')}?lang=${locale}` :
       `/${apiID.replace('-page', 's')}?lang=${locale}`;
