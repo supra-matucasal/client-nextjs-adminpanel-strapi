@@ -1,9 +1,14 @@
+
 import dynamic from 'next/dynamic';
 const Faq = dynamic(() => import('../../components/blocks/Faq'), {
   ssr: true,
 });
 
 const Hero = dynamic(() => import('../../components/blocks/Hero'), {
+  ssr: true,
+});
+
+const FeaturedPartnerships = dynamic(() => import('../../components/blocks/FeaturedPartnerships'), {
   ssr: true,
 });
 
@@ -27,6 +32,14 @@ const BlockManager = ({ blocks, contentType, pageData, type }: { blocks: any[], 
             break;
 
         }
+
+        switch (block.__component) {
+          case 'blocks.featured-partnerships':
+            Block = FeaturedPartnerships;
+            break;
+
+        }
+        
 
         return Block ? (
           <div key={`index-${index}`}>

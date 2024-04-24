@@ -1,5 +1,5 @@
 import delve from 'dlv';
-import { getStrapiMedia } from '../../../utils';
+import { getStrapiMedia } from '../../utils';
 import Image from 'next/image';
 
 export type Image = {

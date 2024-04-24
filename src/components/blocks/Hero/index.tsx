@@ -1,6 +1,6 @@
 import delve from 'dlv';
-import ImageCards from './image-cards';
-import { Image } from './image-cards';
+import ImageCards from '../../ImageCards';
+import { Image } from '../../ImageCards';
 import CustomLink from '@/components/CustomLink';
 
 const Hero = ({ images, header, text, buttons }: { images: Image, header: any, text: string, buttons: [] }) => {
