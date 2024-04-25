@@ -7,14 +7,14 @@ type LocalImage = {
   data: any[]
 }
 
-const PartnershipCard = ({ slug, image, name }: { slug: String, image: LocalImage, name: String }) => {
+const PartnershipCard = ({ id, slug, image, name }: { id: number, slug: String, image: LocalImage, name: String }) => {
 
 
   const imageUrl = getStrapiMedia(delve(image.data, 'attributes.url'));
 
   return (
     <div>
-      <Link href={`/partnerships/${slug}`}>
+      <Link href={`/partnerships/${id}`}>
         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-full cursor-pointer">
           {imageUrl && (
 

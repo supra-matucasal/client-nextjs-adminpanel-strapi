@@ -119,33 +119,6 @@ export function getPartnershipsDataPage(slug: string, locale: string, apiID: str
 }
 
 
-
-// export async function getRestaurants(key: QueryKey): Promise<{ restaurants: any[]; count: number }> {
-//   const [_, categoryName, placeName, localeCode, pageNumber, perPage] = key.queryKey;
-//   const start = +pageNumber === 1 ? 0 : (+pageNumber - 1) * +perPage;
-
-//   let baseUrl = getStrapiURL(`/restaurants?pagination[limit]=${perPage}&pagination[start]=${start}&pagination[withCount]=true&populate=images,category,place,information,seo`);
-
-//   if (categoryName) {
-//     baseUrl += `&filters[category][name][$eq]=${categoryName}`;
-//   }
-//   if (placeName) {
-//     baseUrl += `&filters[place][name][$eq]=${placeName}`;
-//   }
-//   if (localeCode) {
-//     baseUrl += `&locale=${localeCode}`;
-//   }
-
-//   //const res = await fetch(baseUrl);
-//   //const restaurants: PartnershipsResponse = await res.json();
-
-//   return {
-//     // restaurants: restaurants.data,
-//     // count: restaurants.meta.pagination.total,
-//     data: baseUrl
-//   };
-// }
-
 export function getPartnershipsData (key: QueryKey): DataReturn {
   const [_, localeCode, pageNumber, perPage] = key.queryKey;
   const start = +pageNumber === 1 ? 0 : (+pageNumber - 1) * +perPage;
@@ -165,24 +138,9 @@ export function getPartnershipsData (key: QueryKey): DataReturn {
 
 }
 
-export async function getArticles(key: QueryKey): Promise<{ articles: any[]; count: number }> {
-  const [_, categoryName, localeCode, pageNumber, perPage] = key.queryKey;
-  const start = +pageNumber === 1 ? 0 : (+pageNumber - 1) * +perPage;
-
-  let baseUrl = getStrapiURL(`/articles?pagination[limit]=${perPage}&pagination[start]=${start}&pagination[withCount]=true&populate=image,category,author,seo`);
-
-  if (categoryName) {
-    baseUrl += `&filters[category][name][$eq]=${categoryName}`;
-  }
-  if (localeCode) {
-    baseUrl += `&locale=${localeCode}`;
-  }
-
-  const res = await fetch(baseUrl);
-  const articles: ArticlesResponse = await res.json();
-
+export function getPartnershipByIdData (id: number): DataReturn {
+  const apiUrl = getStrapiURL(`/partnerships/${id}?populate=image`);
   return {
-    articles: articles.data,
-    count: articles.meta.pagination.total,
+    data: apiUrl
   };
 }

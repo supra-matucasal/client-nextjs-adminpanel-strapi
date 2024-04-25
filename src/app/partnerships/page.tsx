@@ -1,6 +1,3 @@
-import delve from 'dlv';
-
-
 import { getPartnerships } from "@/services/partnerships.service";
 import PartnershipCard from '@/components/PartnershipCard';
 
@@ -38,9 +35,10 @@ const PartnershipsPage = async () => {
     <div>
       <div>Partnerships Page</div>
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-24 px-4">
-        {partnershipsDataResult && 
+        {partnershipsDataResult &&
           partnershipsDataResult.map((partnership: any, index: number) => (
             <PartnershipCard
+              id={partnership.id}
               {...partnership.attributes}
               locale={partnership.locale}
               key={index}

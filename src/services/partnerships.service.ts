@@ -1,4 +1,4 @@
-import { getPartnershipsDataPage, getPartnershipsData, QueryKey } from '@/utils';
+import { getPartnershipsDataPage, getPartnershipsData, QueryKey, getPartnershipByIdData } from '@/utils';
 import delve from 'dlv';
 
 
@@ -12,7 +12,6 @@ const getPartnershipsPage = async (pageSlug: string) => {
     'partnerships-pages',
     'collectionType',
   );
-  console.log('partnerships url: ', )
   const res = await fetch(delve(data, 'data'), {
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
@@ -39,8 +38,24 @@ const getPartnerships = async (key: QueryKey) => {
 
 }
 
+const getPartnershipsById = async (id: number) => {
+  const data = getPartnershipByIdData(
+    id
+  );
+
+  const res = await fetch(delve(data, 'data'), {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+    },
+    next: { tags: ['getPartnershipById'], revalidate: 20 },
+  });
+
+  return res;
+}
+
 export {
   getPartnershipsPage,
-  getPartnerships
+  getPartnerships,
+  getPartnershipsById
 };
 
