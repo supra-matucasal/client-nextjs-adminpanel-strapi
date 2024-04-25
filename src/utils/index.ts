@@ -13,10 +13,10 @@ interface Redirection {
 
 interface DataReturn {
   data: string;
-  slug: string;
+  slug?: string;
 }
 
-interface RestaurantsResponse {
+interface PartnershipsResponse {
   data: any[]; // Specify the data type more accurately if known
   meta: {
     pagination: {
@@ -34,7 +34,7 @@ interface ArticlesResponse {
   };
 }
 
-interface QueryKey {
+export interface QueryKey {
   queryKey: string[];
 }
 
@@ -88,9 +88,9 @@ export function getData(slug: string, locale: string, apiID: string, kind: strin
     let prefix = apiID === 'page' ? '' : `/${pluralize(apiID)}`;
     prefix = apiID === 'article' ? '/blog' : prefix;
     slugToReturn = `${prefix}/${slug}?lang=${locale}`;
-    apiUrl = `/${pluralize(apiID)}?filters[slug][$eq]=${slug}&locale=${locale}${previewParams}&populate[seo][populate]=metaSocial.image&populate[blocks][on][blocks.featured-partnerships][populate]=partnerships.Image&populate[blocks][on][blocks.hero][populate]=*&populate[blocks][on][blocks.faq][populate]=*`;
+    apiUrl = `/${pluralize(apiID)}?filters[slug][$eq]=${slug}&locale=${locale}${previewParams}&populate[seo][populate]=metaSocial.image&populate[blocks][on][blocks.featured-partnerships][populate]=partnerships.image&populate[blocks][on][blocks.hero][populate]=*&populate[blocks][on][blocks.faq][populate]=*`;
   } else {
-    apiUrl = `/${apiID}?locale=${locale}${previewParams}&populate[seo][populate]=metaSocial.image&populate[blocks][on][blocks.featured-partnerships][populate]=partnerships.Image&populate[blocks][on][blocks.hero][populate]=*&populate[blocks][on][blocks.faq][populate]=*`;
+    apiUrl = `/${apiID}?locale=${locale}${previewParams}&populate[seo][populate]=metaSocial.image&populate[blocks][on][blocks.featured-partnerships][populate]=partnerships.image&populate[blocks][on][blocks.hero][populate]=*&populate[blocks][on][blocks.faq][populate]=*`;
     slugToReturn = apiID.includes('-page') ?
       `/${apiID.replace('-page', '')}?lang=${locale}` :
       `/${apiID.replace('-page', 's')}?lang=${locale}`;
@@ -120,29 +120,49 @@ export function getPartnershipsDataPage(slug: string, locale: string, apiID: str
 
 
 
-export async function getRestaurants(key: QueryKey): Promise<{ restaurants: any[]; count: number }> {
-  const [_, categoryName, placeName, localeCode, pageNumber, perPage] = key.queryKey;
+// export async function getRestaurants(key: QueryKey): Promise<{ restaurants: any[]; count: number }> {
+//   const [_, categoryName, placeName, localeCode, pageNumber, perPage] = key.queryKey;
+//   const start = +pageNumber === 1 ? 0 : (+pageNumber - 1) * +perPage;
+
+//   let baseUrl = getStrapiURL(`/restaurants?pagination[limit]=${perPage}&pagination[start]=${start}&pagination[withCount]=true&populate=images,category,place,information,seo`);
+
+//   if (categoryName) {
+//     baseUrl += `&filters[category][name][$eq]=${categoryName}`;
+//   }
+//   if (placeName) {
+//     baseUrl += `&filters[place][name][$eq]=${placeName}`;
+//   }
+//   if (localeCode) {
+//     baseUrl += `&locale=${localeCode}`;
+//   }
+
+//   //const res = await fetch(baseUrl);
+//   //const restaurants: PartnershipsResponse = await res.json();
+
+//   return {
+//     // restaurants: restaurants.data,
+//     // count: restaurants.meta.pagination.total,
+//     data: baseUrl
+//   };
+// }
+
+export function getPartnershipsData (key: QueryKey): DataReturn {
+  const [_, localeCode, pageNumber, perPage] = key.queryKey;
   const start = +pageNumber === 1 ? 0 : (+pageNumber - 1) * +perPage;
 
-  let baseUrl = getStrapiURL(`/restaurants?pagination[limit]=${perPage}&pagination[start]=${start}&pagination[withCount]=true&populate=images,category,place,information,seo`);
+  const baseUrl = getStrapiURL(`/partnerships?pagination[limit]=${perPage}&pagination[start]=${start}&pagination[withCount]=true&populate=image`);
 
-  if (categoryName) {
-    baseUrl += `&filters[category][name][$eq]=${categoryName}`;
-  }
-  if (placeName) {
-    baseUrl += `&filters[place][name][$eq]=${placeName}`;
-  }
-  if (localeCode) {
-    baseUrl += `&locale=${localeCode}`;
-  }
+  //const res = await fetch(baseUrl);
+  //const partnerships: PartnershipsResponse = await res.json();
 
-  const res = await fetch(baseUrl);
-  const restaurants: RestaurantsResponse = await res.json();
+  //console.log('partnerships in get partnerships data: ', partnerships)
 
   return {
-    restaurants: restaurants.data,
-    count: restaurants.meta.pagination.total,
+    // partnerships: partnerships.data,
+    // count: partnerships.meta.pagination.total,
+    data: baseUrl
   };
+
 }
 
 export async function getArticles(key: QueryKey): Promise<{ articles: any[]; count: number }> {

@@ -16,10 +16,10 @@ const FeaturedPartnerships = ({ header, partnerships, theme }: { header: any, pa
       <div className="mt-4 relative relative-20 lg:mt-0 lg:col-start-1">
         {partnerships && partnerships.data && partnerships.data.map((partnership, index) => {
           return (
-            <Link href={partnership.attributes.Link} key={`partnership-${index}`}>
+            <Link href={partnership.attributes.link} key={`partnership-${index}`}>
               <FeaturedPartnershipsImages
                 key={`partnership-${index}`}
-                image={partnership.attributes.Image} />
+                image={partnership.attributes.image} />
             </Link>
           )
         })}

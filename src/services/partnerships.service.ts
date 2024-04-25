@@ -1,4 +1,4 @@
-import { getPartnershipsDataPage } from '@/utils';
+import { getPartnershipsDataPage, getPartnershipsData, QueryKey } from '@/utils';
 import delve from 'dlv';
 
 
@@ -23,7 +23,24 @@ const getPartnershipsPage = async (pageSlug: string) => {
   return res;
 }
 
+const getPartnerships = async (key: QueryKey) => {
+  const data = getPartnershipsData(
+    key
+  );
+
+  const res = await fetch(delve(data, 'data'), {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+    },
+    next: { tags: ['getPartnerships'], revalidate: 20 },
+  });
+
+  return res;
+
+}
+
 export {
-  getPartnershipsPage
+  getPartnershipsPage,
+  getPartnerships
 };
 
